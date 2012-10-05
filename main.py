@@ -99,7 +99,10 @@ def main():
     throttler = WsgiThrottler(proxy, options.pool_size)
     
     # SSL settings
-    ssl_settings = {"certfile": options.certfile, "keyfile": options.keyfile}
+    if options.certfile and options.keyfile:
+        ssl_settings = {"certfile": options.certfile, "keyfile": options.keyfile}
+    else:
+        ssl_settings = {}
     
     main_logger = getLogger(__name__)
     main_logger.info("Proxying %s on %s:%i with a maximum of %i concurrent requests" %(
